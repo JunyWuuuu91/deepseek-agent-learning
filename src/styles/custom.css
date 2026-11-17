@@ -301,18 +301,28 @@
 
 .lab-form,
 .lab-feed,
-.lab-presets,
 .lab-steps,
 .lab-timeline ol {
   display: grid;
-  gap: 0.45rem;
+  gap: 8px;
   min-width: 0;
+}
+
+.lab-presets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
 }
 
 .lab-fields {
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-  gap: 0.45rem;
+  gap: 8px;
+  align-items: end;
+  margin: 0;
 }
 
 .lab-card,
@@ -335,18 +345,26 @@
 .lab input,
 .lab select {
   width: 100%;
+  height: 2.25rem;
   border: 1px solid var(--sl-color-gray-4);
   border-radius: 8px;
-  padding: 0.4rem 0.5rem;
+  padding: 0 0.5rem;
   background: var(--sl-color-bg);
   color: var(--sl-color-white);
   font: inherit;
 }
 
-.lab-presets,
 .lab-actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.lab-form label,
+.lab-fields,
+.lab-form button {
+  margin: 0;
 }
 
 .lab button {
@@ -363,6 +381,15 @@
   background: transparent;
   color: var(--sl-color-white);
   border: 1px solid var(--sl-color-gray-4);
+}
+
+.lab .lab-presets button {
+  flex: 0 0 auto;
+  height: 2rem;
+  margin: 0;
+  padding: 0 0.75rem;
+  white-space: nowrap;
+  line-height: 1;
 }
 
 .lab button:disabled {

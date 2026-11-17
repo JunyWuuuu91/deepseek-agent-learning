@@ -85,7 +85,7 @@ export default function Lab() {
   }
 
   return (
-    <div className="lab">
+    <div className="lab not-content">
       <div className="lab-bar">
         <div>
           <p className="kicker">本地状态机 · 不调用模型，不发出请求</p>
