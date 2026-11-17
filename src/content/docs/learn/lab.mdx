@@ -1,0 +1,23 @@
+---
+title: 实验室
+description: 在浏览器里点完一台迷你 Router–Worker。它不调用 DeepSeek，只跑本站的状态机。
+---
+
+import Lab from "../../../components/Lab.tsx";
+
+这页演示的是 [迷你 Router–Worker](/learn/31-mini-router/) 里的同一份状态机。浏览器不保存密钥，也不发出网络请求。点「下一步」推进事件；出现具体问题时，右边的面板会挡住自动前进，直到你选一个答案。
+
+<Lab client:load />
+
+状态定义在 `src/lib/routerMachine.ts`。页面只负责把 `advance` 和 `resolveAttention` 的结果显示出来。公开原型里的面板优先展示等人处理的工单，本页把这件事收成一块「待人工决定」。
+
+## 练习
+
+1. 先走一遍「改成 480px」，再重来走「先不改」。比较工单最后的阶段。
+2. 在 `canAdvance` 为假时连点「下一步」，确认阶段停在 `attention`。
+3. 打开开发者工具的网络面板，确认这几次点击没有请求。
+
+## 延伸阅读
+
+- [005 Panel](https://github.com/deepseek-ai/dsh-superagent-prototype/blob/main/docs/005-panel.md)
+- [001 Domain model](https://github.com/deepseek-ai/dsh-superagent-prototype/blob/main/docs/001-domain.md) 里的 Attention（待人工决定）
