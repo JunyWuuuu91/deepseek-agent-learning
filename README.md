@@ -44,6 +44,6 @@ npm run check:machine    # 实验室的状态机
 
 ## 目录
 
-学习路线在首页。章节在 `src/content/docs/learn/`。可运行片段在 `examples/`。实验室的状态机在 `src/lib/routerModel.ts` 和 `src/lib/routerMachine.ts`。
+学习路线在首页。章节在 `src/content/docs/learn/`。可运行片段在 `examples/`。实验室的状态机在 `src/lib/routerMachine.ts`。
 
 未能核实的事实写在站点的「来源与核对边界」一页，不散落成肯定句。

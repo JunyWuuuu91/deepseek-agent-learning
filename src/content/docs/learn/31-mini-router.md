@@ -3,62 +3,24 @@ title: "迷你 Router–Worker"
 description: "一份没有模型的状态机：忽略闲聊，接明确请求，把后续事件扇出给同一张工单，在具体问题上停住。"
 ---
 
-毕业设计不调用 DeepSeek。密钥、计费和网络波动会挡住你观察状态机本身。`src/lib/routerModel.ts` 定义阶段，`src/lib/routerMachine.ts` 定义转移。两个文件都短于 100 行，测试是 `npm run check:machine`。
+毕业设计不调用 DeepSeek。规则写在 `src/lib/routerMachine.ts` 的 `apply` 里，测试是 `npm run check:machine`。页面只负责把每一次 `apply` 画出来。
 
-阶段对应原型里的一张缩小的表：
+阶段用中文标在工单上：新建之后进入执行中，需要拍板时是等待人工，做完是待验收，结束是已完成或已丢弃。失败会单独停住，等你重试或停止。
 
-| 阶段 | 含义 |
-| --- | --- |
-| `working` | 工人正在做 |
-| `attention` | 有一个具体问题，面板必须出现 |
-| `review` | 人已经选择改法，等验收 |
-| `closed` | 验收通过 |
-| `stopped` | 人决定先不改 |
+判定是两组看得见的规则，不是一次真实的模型调用：
 
-`attention` 时 `canAdvance` 为假。自动的「下一步」不能替人回答。这就是审批那一课的 `pending`。
+- 快路径：没有 `@agent` 或「请智能体」，也不像一件工作，代码直接丢掉。线程上已经有订阅时，后续事件直接扇出给那张工单。
+- 慢路径：点名就是明确请求，路由建工单并派给工人。没点名但像工作的文本，在 `observe` 里只记录「本会接单」；切到 `auto` 才会真的接。
 
-类型和事件：
+工人的工具调用是写死的步骤名，例如 `read`、`preview`、`edit`。它们说明「工具留在工人日志里」，并不会去读你的仓库。
 
-```ts
-export type Who = "gate" | "router" | "worker" | "you";
-export type Stage = "working" | "attention" | "review" | "closed" | "stopped";
-export type Answer = "approve" | "reject";
-export type Phase =
-  | "idle" | "dropped" | "accepted" | "fanout" | "attention" | "review" | "closed";
-
-export const nextPhase: Record<Phase, Phase | null> = {
-  idle: "dropped",
-  dropped: "accepted",
-  accepted: "fanout",
-  fanout: "attention",
-  attention: null,
-  review: "closed",
-  closed: null,
-};
-```
-
-`advance` 在 `src/lib/routerMachine.ts`。停住的那一支是：
-
-```ts
-if (phase === "attention") {
-  const question = "断点改成 480px，还是只修这一处溢出？";
-  return {
-    ...state,
-    phase,
-    ticket: state.ticket ? { ...state.ticket, stage: "attention", question } : null,
-  };
-}
-```
-
-这不是完整函数。同一文件里还有闲聊被丢掉、`@agent` 创建 `ticket-1`、CI 扇出到这张工单的分支。`resolveAttention` 在同意时进入 `review`，在拒绝时直接 `stopped`。
-
-和原型的差距要写在注释里，而不是假装已经实现：这里没有 SQLite、没有 Harness 会话、没有 GitHub。它只保留「路由不改代码、工人不直接把日志扔给人、问题一次一个」。
+和公开原型的差别：这里没有 SQLite，没有 Harness 会话。丢弃或完成后，教学机会取消订阅；原型会把订阅留着，等人再说话时重新打开同一张工单。
 
 ## 练习
 
-1. 跑 `npm run check:machine`，读断言的顺序。
-2. 加一个新阶段会怎样破坏 `nextPhase`？先写测试再改表。
-3. 把「路由不改代码」写成一条你在 `advance` 里能指给人看的语句。
+1. 跑 `npm run check:machine`。指出哪一条断言保证「同一条线程的 CI 不会新建第二张工单」。
+2. 在实验室把接受模式改成 `auto`，再送入「未点名的 PR 评论」。对比 `observe` 下的时间线。
+3. 在 `apply` 里指出路由自己不调用 `edit` 的那一支。
 
 ## 延伸阅读
 
