@@ -46,12 +46,48 @@
 }
 
 .hero {
-  padding-block: 2.5rem 1rem;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: start;
+  padding-block: clamp(1.5rem, 3.5vw, 3.75rem) 0.5rem;
+}
+
+.hero .stack {
+  width: min(100%, 48rem);
+  align-items: flex-start;
+  text-align: start;
+}
+
+.hero .copy {
+  align-items: flex-start;
+  width: 100%;
+}
+
+.hero .copy > * {
+  max-width: 40rem;
 }
 
 .hero h1 {
+  max-width: 100%;
+  font-size: clamp(1.85rem, 0.95rem + 2.5vw, 3.15rem);
+  line-height: 1.15;
+  font-weight: 640;
   letter-spacing: -0.03em;
-  max-width: 22rem;
+}
+
+.hero h1 .hero-line {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+@media (min-width: 960px) {
+  .hero h1 {
+    font-size: clamp(2.35rem, 1.05rem + 1.7vw, 3.25rem);
+    white-space: nowrap;
+  }
+
+  .hero .copy > h1 {
+    max-width: none;
+  }
 }
 
 .sl-markdown-content h2,
