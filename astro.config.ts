@@ -7,7 +7,7 @@ export default defineConfig({
   integrations: [
     react(),
     starlight({
-      title: "从前端到 Super-agent",
+      title: "Super Agent 由浅入深",
       description:
         "给写过 React、还没写过模型调用的人。从一次 fetch 读到 DeepSeek Super-agent。",
       defaultLocale: "root",

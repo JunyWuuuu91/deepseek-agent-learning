@@ -1,4 +1,4 @@
-# 从前端到 Super-agent
+# Super Agent 由浅入深
 
 给写过 React、还没写过模型调用的人。这是一个中文静态站，从一次 `fetch` 讲到 DeepSeek 的 Router–Worker，并标明架构文章和 2026-10-31 公开原型之间的差别。
 
