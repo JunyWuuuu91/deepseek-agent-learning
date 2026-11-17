@@ -291,12 +291,37 @@
   box-shadow: inset 3px 0 0 var(--sl-color-orange);
 }
 
+.lab ol,
+.lab ul,
+.lab li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .lab-form,
+.lab-feed,
 .lab-presets,
 .lab-steps,
 .lab-timeline ol {
   display: grid;
   gap: 0.45rem;
+  min-width: 0;
+}
+
+.lab-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 0.45rem;
+}
+
+.lab-card,
+.lab-card p,
+.lab-card b,
+.lab-card h3 {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .lab-form label,
@@ -379,8 +404,13 @@
   background: color-mix(in srgb, var(--sl-color-accent-low) 70%, var(--sl-color-bg));
 }
 
-@media (max-width: 720px) {
-  .lab-grid {
+.is-lab-wide .sl-markdown-content > :is(p, h2, ol) {
+  max-width: 46rem;
+}
+
+@media (max-width: 1100px) {
+  .lab-grid,
+  .lab-fields {
     grid-template-columns: 1fr;
   }
 }

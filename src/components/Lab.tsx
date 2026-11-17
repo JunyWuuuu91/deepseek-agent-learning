@@ -163,20 +163,22 @@ export default function Lab() {
                 </button>
               ))}
             </div>
-            <label>
-              来源
-              <select value={source} onChange={(event) => setSource(event.target.value as SourceId)}>
-                {(Object.keys(SOURCE_LABEL) as SourceId[]).map((id) => (
-                  <option key={id} value={id}>
-                    {SOURCE_LABEL[id]}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              线程
-              <input value={thread} onChange={(event) => setThread(event.target.value)} />
-            </label>
+            <div className="lab-fields">
+              <label>
+                来源
+                <select value={source} onChange={(event) => setSource(event.target.value as SourceId)}>
+                  {(Object.keys(SOURCE_LABEL) as SourceId[]).map((id) => (
+                    <option key={id} value={id}>
+                      {SOURCE_LABEL[id]}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                线程
+                <input value={thread} onChange={(event) => setThread(event.target.value)} />
+              </label>
+            </div>
             <label>
               内容
               <input value={text} onChange={(event) => setText(event.target.value)} placeholder="@agent 描述一件工作" />

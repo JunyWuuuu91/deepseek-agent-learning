@@ -15,6 +15,9 @@ export default defineConfig({
         root: { label: "简体中文", lang: "zh-CN" },
       },
       customCss: ["./src/styles/custom.css"],
+      components: {
+        ContentPanel: "./src/components/ContentPanel.astro",
+      },
       favicon: "/favicon.svg",
       lastUpdated: true,
       editLink: {
